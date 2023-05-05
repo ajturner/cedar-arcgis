@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  border: 1px dashed red;
+  width: 800px;
+  height: 800px;
+}
+.chart {
+  width: 800px;
+  height: 800px;
+
+}

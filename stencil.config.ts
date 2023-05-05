@@ -2,7 +2,7 @@ import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
 export const config: Config = {
-  namespace: 'REPLACE_PROJECT_NAME',
+  namespace: 'cedar-arcgis',
   sourceMap: true,
   plugins: [
     sass()
@@ -34,6 +34,10 @@ export const config: Config = {
         },
         {
           src: "./**/*.json", dest: 'data/'
+        },
+        {
+          src: '../node_modules/@arcgis/charts-components/dist/arcgis-charts-components/*',
+          dest: 'lib/'
         }
       ]
     },

@@ -1,7 +1,7 @@
 {
-  "name": "REPLACE_PROJECT_NAME",
+  "name": "cedar-arcgis",
   "version": "0.0.1",
-  "description": "Template for creating prototypes with stencil",
+  "description": "Wrapper for creating ArcGIS Charts with Cedar spec",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
@@ -11,12 +11,12 @@
   "collection:main": "dist/collection/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajturner/ajturner-prototype-template.git"
+    "url": "https://github.com/ajturner/cedar-arcgis.git"
   },
   "contributors": [
     {
       "name": "Andrew Turner",
-      "email": "ajturner@highearthorbit.com",
+      "email": "aturner@esri.com",
       "url": "https://highearthorbit.com/"
     }
   ],
@@ -32,6 +32,8 @@
     "generate": "stencil generate"
   },
   "dependencies": {
+    "@arcgis/charts-components": "^1.0.0-beta.518",
+    "@arcgis/charts-spec": "^1.0.0-beta.518",
     "@stencil/core": "^2.13.0",
     "@types/node": "^18.14.0"
   },
