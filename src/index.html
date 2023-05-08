@@ -15,7 +15,7 @@
     href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
   />
 
-  
+
   <!-- <link
     rel="stylesheet"
     type="text/css"
@@ -28,9 +28,41 @@
 <body>
   <!-- Delayed render so we can get the API key from URL parameters -->
   <div id="placeholder"></div>
-  <cedar-chart>
-    My Chart
+
+  <cedar-chart
+    cedar-url="/data/bar.json"
+  >
+    Cedar Bar Demo
   </cedar-chart>
+
+  <cedar-chart
+    cedar-url="/data/311_cedar.json"
+  >
+    311 Chart
+  </cedar-chart>
+<!-- 
+  <cedar-chart
+    cedar-url="/data/tree_cedar.json"
+  >
+    cedar Chart
+  </cedar-chart>
+
+  <cedar-chart
+    config-url="/data/trees.json"
+  >
+    Trees Chart
+  </cedar-chart> -->
+
+  <!-- <cedar-chart
+    config-url="/data/crime.json"
+  >
+    Crime Chart
+  </cedar-chart> -->
+
+
+  <cedar-table>
+    My Table
+  </cedar-table>
   <style>
     body {
       font-family: sans-serif;

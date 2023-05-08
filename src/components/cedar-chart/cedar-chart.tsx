@@ -1,17 +1,18 @@
-import { Component, Host, h, State, Listen } from '@stencil/core';
-import { feature_layer_chart } from '../../data/charts';
+import { Component, Host, h, State, Listen, Prop } from '@stencil/core';
+// import { feature_layer_chart } from '../../data/charts';
 
 // import "arcgis-charts-components";
 import '@arcgis/charts-components';
 // import "arcgis-charts-components/dist/components/index";
-import { setAssetPath  } from "@arcgis/charts-components/dist/components";
+// import { setAssetPath  } from "@arcgis/charts-components/dist/components";
 import { WebChart } from '@arcgis/charts-spec';
 
-import "@arcgis/charts-components/dist/components/arcgis-charts-bar-chart";
+// import "@arcgis/charts-components/dist/components/arcgis-charts-bar-chart";
 // import "@arcgis/charts-components/dist/components/arcgis-charts-scatter-plot";
 // import "@arcgis/charts-components/dist/components/arcgis-charts-histogram";
 
 import "@arcgis/charts-components/dist/arcgis-charts-components/arcgis-charts-components.css";
+import { convertCedar } from '../../util/converter';
 
 // import { defineCustomElements } from "@arcgis/charts-components/dist/loader";
 // // Local assets
@@ -27,29 +28,46 @@ import "@arcgis/charts-components/dist/arcgis-charts-components/arcgis-charts-co
 export class CedarChart {
   chartEl: HTMLArcgisChartsBarChartElement; 
 
-  componentWillLoad() {
-    this.config = feature_layer_chart;
+  @Prop() configUrl:string = null;
+  @Prop() cedarUrl:string = null;
+
+  async componentWillLoad() {
+    // this.config = feature_layer_chart;
+
+    if(!!this.configUrl) {
+      const response = await fetch(this.configUrl);
+      this.config = await response.json();
+    } else if (!!this.cedarUrl) {
+      const response = await fetch(this.cedarUrl);
+      const cedar = await response.json();
+      this.config = convertCedar( cedar );
+    }
+    console.debug("Chart config loaded", {
+      configUrl: this.configUrl,
+      cedarUrl: this.cedarUrl,
+      config: this.config
+    })
     // this.data = inline_chart_data;
   }
   componentDidLoad() {
-    setAssetPath(location.href);
-
-    console.debug("Chart El Config", {
-      chartEl: this.chartEl, 
-      legendVisibility: this.chartEl.legendVisibility, 
-      chartElConfig: this.chartEl.config
-    })
-
-    console.debug("Custom Elements", [
-      customElements.get( 'arcgis-charts-bar-chart' )
-    ])
+    // setAssetPath(location.href);
   }
-  @State() config = {}
-  @State() data = {}
+  @State() config = null;
+  @State() data = null;
 
   @Listen('arcgisChartsDataProcessComplete')
   loadingComplete(evt)  {
-    console.log("arcgisChartsDataProcessComplete", evt);
+    console.debug("arcgisChartsDataProcessComplete", evt);
+  }
+
+  @Listen('arcgisChartsDataProcessError')
+  dataError(evt) {
+    console.error("arcgisChartsDataProcessError", evt);
+  }
+
+  @Listen('arcgisChartsUpdateComplete')
+  updateComplete(evt) {
+    console.debug("arcgisChartsUpdateComplete", evt);
   }
 
   render() {
@@ -62,7 +80,9 @@ export class CedarChart {
           class="chart" 
           config={this.config as WebChart}
         ></arcgis-charts-bar-chart>
-
+        <code>
+          {this.config}
+        </code>
       </Host>
     );
   }

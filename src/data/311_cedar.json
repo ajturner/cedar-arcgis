@@ -1,0 +1,28 @@
+{
+    "type": "bar",
+    "datasets": [
+      {
+        "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/SR_30days_Open/MapServer/0",
+        "name": "311 requests",
+        "query": {
+            "groupByFieldsForStatistics": ["SERVICECODEDESCRIPTION"],
+            "outStatistics": [
+                {
+                "onStatisticField": "SERVICECODEDESCRIPTION",
+                "statisticType": "count",
+                "outStatisticFieldName": "COUNT_NAME"
+                }
+            ],
+            "orderByFields": ["COUNT_NAME DESC"]
+        }
+      }
+    ],
+    "series": [
+      {
+        "category": {"field": "SERVICECODEDESCRIPTION", "label": "Service Type"},
+        "value": {"field": "COUNT_NAME", "label": "Count"},
+        "source": "311 requests"
+      }
+    ]
+  }
+  

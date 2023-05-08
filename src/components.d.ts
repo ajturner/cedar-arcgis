@@ -7,6 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CedarChart {
+        "cedarUrl": string;
+        "configUrl": string;
+    }
+    interface CedarTable {
     }
 }
 declare global {
@@ -16,15 +20,27 @@ declare global {
         prototype: HTMLCedarChartElement;
         new (): HTMLCedarChartElement;
     };
+    interface HTMLCedarTableElement extends Components.CedarTable, HTMLStencilElement {
+    }
+    var HTMLCedarTableElement: {
+        prototype: HTMLCedarTableElement;
+        new (): HTMLCedarTableElement;
+    };
     interface HTMLElementTagNameMap {
         "cedar-chart": HTMLCedarChartElement;
+        "cedar-table": HTMLCedarTableElement;
     }
 }
 declare namespace LocalJSX {
     interface CedarChart {
+        "cedarUrl"?: string;
+        "configUrl"?: string;
+    }
+    interface CedarTable {
     }
     interface IntrinsicElements {
         "cedar-chart": CedarChart;
+        "cedar-table": CedarTable;
     }
 }
 export { LocalJSX as JSX };
@@ -32,6 +48,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "cedar-chart": LocalJSX.CedarChart & JSXBase.HTMLAttributes<HTMLCedarChartElement>;
+            "cedar-table": LocalJSX.CedarTable & JSXBase.HTMLAttributes<HTMLCedarTableElement>;
         }
     }
 }

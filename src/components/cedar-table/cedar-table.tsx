@@ -12,6 +12,7 @@ export class CedarTable {
       <Host>
         <slot></slot>
         <strong>I'm a Table!</strong>
+        
       </Host>
     );
   }
