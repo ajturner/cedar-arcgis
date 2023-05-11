@@ -6,8 +6,8 @@
         "name": "Jordan",
         "query": {
           "where": "City='Jordan'",
-          "orderByFields": "Number_of_SUM DESC",
-          "groupByFieldsForStatistics": "Type",
+          "orderByFields": ["Number_of_SUM DESC"],
+          "groupByFieldsForStatistics": ["Type"],
           "outStatistics": [{
             "statisticType": "sum",
             "onStatisticField": "Number_of",
@@ -21,8 +21,8 @@
         "name": "Dewitt",
         "query": {
           "where": "City='Dewitt'",
-          "orderByFields": "Number_of_SUM DESC",
-          "groupByFieldsForStatistics": "Type",
+          "orderByFields": ["Number_of_SUM DESC"],
+          "groupByFieldsForStatistics": ["Type"],
           "outStatistics": [{
             "statisticType": "sum",
             "onStatisticField": "Number_of",
@@ -36,8 +36,8 @@
         "name": "Fayetteville",
         "query": {
           "where": "City='Fayetteville'",
-          "orderByFields": "Number_of_SUM DESC",
-          "groupByFieldsForStatistics": "Type",
+          "orderByFields": ["Number_of_SUM DESC"],
+          "groupByFieldsForStatistics": ["Type"],
           "outStatistics": [{
             "statisticType": "sum",
             "onStatisticField": "Number_of",
