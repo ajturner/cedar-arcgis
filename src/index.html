@@ -9,11 +9,7 @@
   <script type="module" src="./build/cedar-arcgis.esm.js"></script>
   <script nomodule src="./build/cedar-arcgis.js"></script>
 
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
-  />
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css" />
 
 
   <!-- <link
@@ -29,24 +25,47 @@
   <!-- Delayed render so we can get the API key from URL parameters -->
   <div id="placeholder"></div>
 
+  <h3>Engagement Dashboard</h3>
+  <div class="dashboard">
+    <cedar-chart id="chart-sessions" cedar-url="/data/telemetry_sessions.json" chart-title="Sessions over time">  
+    </cedar-chart>
+
+    <cedar-chart id="chart-views" cedar-url="/data/telemetry_views.json" chart-title="Views over time">
+    </cedar-chart>
+
+    <cedar-chart id="chart-duration" cedar-url="/data/telemetry_duration.json" chart-title="Views over time">
+    </cedar-chart>
+
+    <cedar-chart id="chart-views-bar" cedar-url="/data/telemetry_views_bar.json" chart-title="Views over time">  
+    </cedar-chart>
+  </div>
+
   <!-- <cedar-chart
+  cedar-url="/data/line_inline.json"
+  chart-title="Count of Crime by Month in 2022"
+  >
+    Cedar Line Demo
+  </cedar-chart>
+
+
+  <cedar-chart
     cedar-url="/data/bar.json"
   >
     Cedar Bar Demo
   </cedar-chart> -->
 
-  <cedar-chart
+  <!-- <cedar-chart
     cedar-url="/data/bar_grouped.json"
   >
     Cedar Bar Grouped Demo
-  </cedar-chart>
-<!-- 
+  </cedar-chart> -->
+  <!-- 
   <cedar-chart
     cedar-url="/data/311_cedar.json"
   >
     311 Chart
   </cedar-chart> -->
-<!-- 
+  <!-- 
   <cedar-chart
     cedar-url="/data/tree_cedar.json"
   >
@@ -65,15 +84,40 @@
     Crime Chart
   </cedar-chart> -->
 
-
-  <cedar-table>
-    My Table
-  </cedar-table>
   <style>
     body {
       font-family: sans-serif;
       margin: 0;
       padding: 0;
+    }
+
+    .dashboard {
+      height: 80vh;
+      display: grid;
+      grid-template-columns: 33vw 33vw 33vw;
+      grid-template-rows: 20vh 40vh;
+      grid-gap: 50px;
+      grid-template-areas:
+        "chart-views chart-sessions chart-duration"
+        "chart-views-bar chart-views-bar chart-views-bar"
+    }
+    cedar-chart {
+      height: 100%;
+    }
+    #chart-views {
+      grid-area: chart-views;
+    }
+
+    #chart-sessions {
+      grid-area: chart-sessions;
+    }
+
+    #chart-duration {
+      grid-area: chart-duration;
+    }
+
+    #chart-views-bar {
+      grid-area: chart-views-bar;
     }
   </style>
 
@@ -82,13 +126,13 @@
     const componentName = "prototype";
 
     const placeholderEl = document.getElementById("placeholder");
-    const componentEl = document.createElement( componentName );
+    const componentEl = document.createElement(componentName);
 
     const urlParams = new URL(window.location).searchParams;
     // Change for specific component properties
     // componentEl.query = urlParams.get('query');
     // componentEl.innerHTML = "Slot text";
-    
+
     placeholderEl.appendChild(componentEl);
   </script>
 </body>

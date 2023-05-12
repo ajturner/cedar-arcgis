@@ -1,30 +1,113 @@
-import { WebChart } from "@arcgis/charts-spec";
+import { CategoryFormatOptions, DateTimeFormatOptions, NumberFormatOptions, WebChart, WebChartDataSources } from "@arcgis/charts-spec";
 
-export function convertCedar(cedar) {
-  if (cedar.type === "bar") {
-    return convertBarSeries(cedar);
-  }
+// @ts-ignore - where to get Color type?
+const cedarColors:Record<any,Color> = {
+  blue: [0, 121, 193, 255],
+  gray: [128, 128, 128, 200],
+  white: [255, 255, 255, 255]
+}
+export function convertCedar(cedar, title="") {
+  // if (cedar.type === "bar") {
+    return convertBarSeries(cedar,title);
+  // }
 }
 
-/**
- * Draft function for converting Cedar bar charts to ArcGIS Charts
- * @param cedar
- * @returns
- */
-function convertBarSeries(cedar) {
-  const json: WebChart = {
-    version: "6.2.1",
-    type: "chart",
-    dataSource: {
+function convertData(cedar): WebChartDataSources {
+
+  let dataSource = {} as WebChartDataSources;
+  // Dynamic data
+  if(!!cedar.datasets[0].url) {
+    dataSource = {
       type: "layer",
       layer: {
         layerType: "ArcGISFeatureLayer",
         id: "",
         url: cedar.datasets[0].url,
       },
-    },
-    id: "Bar Chart 1",
-    background: [255, 255, 255, 255],
+    }
+  }
+  // Inline data
+  if(!!cedar.datasets[0].data) {
+    dataSource = {
+      type: "inline",
+      processed: true,
+      data: {
+        dataItems: cedar.datasets[0].data.features.map((f) => {
+          return f.attributes
+        }),
+      },
+    }
+  }
+
+  return dataSource;
+
+}
+
+/**
+ * Convert Cedar axis config to ArcGIS charts axis config
+ * Defaults to Category
+ * @param seriesConfig 
+ * @returns 
+ */
+function convertValueFormat( seriesConfig ) {
+  if(seriesConfig?.type === "timestamp") {
+    return ({
+      "type": "date",
+      "intlOptions": {}
+    } as DateTimeFormatOptions);
+  } else if(seriesConfig.type === "number") {
+    return ({
+      "type": "number",
+      "intlOptions": {
+        "style": "decimal",
+        "notation": "compact",
+        "minimumFractionDigits": 2,
+        "maximumFractionDigits": 2
+      }
+    } as NumberFormatOptions);
+  } else {
+    return({
+      "type": "category",
+      "characterLimit": 11,
+      "intlOptions": {}
+    } as CategoryFormatOptions);
+  }
+   
+}
+
+function convertChartType(cedar) {
+  switch(cedar.type) {
+    case 'sparkline': {
+      return 'lineSeries';
+    }
+    case 'line': {
+      return 'lineSeries';
+    }
+    case 'bar': {
+      return 'barSeries';
+    }
+  }
+}
+
+function axesVisible( cedar ) {
+  return cedar.type !== 'sparkline';
+}
+/**
+ * Draft function for converting Cedar bar charts to ArcGIS Charts
+ * @param cedar
+ * @returns
+ */
+function convertBarSeries(cedar, title = "") {
+
+  
+
+  const json: WebChart = {
+    //@ts-ignore
+    version: "1.0.0",
+    type: "chart",
+    dataSource: convertData(cedar),
+    id: "Chart",
+    background: cedarColors.white,
     cursorCrosshair: {
       type: "cursorCrosshair",
       style: {
@@ -40,8 +123,8 @@ function convertBarSeries(cedar) {
       type: "chartText",
       content: {
         type: "esriTS",
-        color: [128, 128, 128, 255],
-        text: "Cedar Chart",
+        color: cedarColors.gray,
+        text: title,
         font: {
           size: 20,
         },
@@ -51,17 +134,18 @@ function convertBarSeries(cedar) {
     // @ts-ignore // we'll add this below
     axes: [],
   };
+
   json.axes = [
     {
       "type": "chartAxis",
-      "visible": true,
+      "visible": axesVisible(cedar),
       "title": {
         "type": "chartText",
-        "visible": true,
+        "visible": axesVisible(cedar),
         "content": {
           "type": "esriTS",
-          "color": [128, 128, 128, 255],
-          "text": "CATEGORY LABEL HERE",
+          "color": cedarColors.gray,
+          "text": cedar.series[0].category.label,
           "font": {
             "size": 14
           }
@@ -69,57 +153,32 @@ function convertBarSeries(cedar) {
       },
       "labels": {
         "type": "chartText",
-        "visible": true,
+        "visible": axesVisible(cedar),
         "content": {
           "type": "esriTS",
-          "color": [128, 128, 128, 255],
+          "color": cedarColors.gray,
           "font": {
             "size": 14
           }
         }
       },
-      "valueFormat": {
-        "type": "category",
-        "characterLimit": 11
-      },
+      "valueFormat": convertValueFormat(cedar.series[0].category),
       "lineSymbol": {
         "type": "esriSLS",
-        "color": [128, 128, 128, 255],
+        "color": cedarColors.gray,
         "width": 2
-      },
-      "guides": [
-        {
-          "type": "chartGuide",
-          "above": false,
-          "start": 2014,
-          "style": {
-            "type": "esriSLS",
-            "color": [128, 128, 128, 200],
-            "width": 2
-          },
-          "name": "string1",
-          "visible": true,
-          "label": {
-            "type": "esriTS",
-            "color": [128, 128, 128, 255],
-            "text": "2014",
-            "font": {
-              "size": 14
-            }
-          }
-        }
-      ]
+      }
     },
     {
       "type": "chartAxis",
-      "visible": true,
+      "visible": axesVisible(cedar),
       "title": {
         "type": "chartText",
-        "visible": true,
+        "visible": axesVisible(cedar),
         "content": {
           "type": "esriTS",
-          "color": [128, 128, 128, 255],
-          "text": "VALUE LABEL HERE",
+          "color": cedarColors.gray,
+          "text": cedar.series[0].value.label,
           "font": {
             "size": 14
           }
@@ -127,68 +186,44 @@ function convertBarSeries(cedar) {
       },
       "labels": {
         "type": "chartText",
-        "visible": true,
+        "visible": axesVisible(cedar),
         "content": {
           "type": "esriTS",
-          "color": [255, 255, 255, 255],
+          "color": cedarColors.gray,
           "font": {
             "size": 14
           }
         }
       },
-      "valueFormat": {
-        "type": "number",
-        "intlOptions": {
-          "style": "decimal",
-          "notation": "compact",
-          "minimumFractionDigits": 0,
-          "maximumFractionDigits": 1
-        }
-      },
+      "valueFormat": convertValueFormat( cedar.series[0].value ),
       "grid": {
         "type": "esriSLS",
-        "color": [128, 128, 128, 200],
+        "color": cedarColors.gray,
         "width": 1
       },
       "lineSymbol": {
         "type": "esriSLS",
-        "color": [255, 255, 255, 255],
+        "color": cedarColors.gray,
         "width": 2
-      },
-      "guides": [
-        {
-          "type": "chartGuide",
-          "above": false,
-          "start": 11000,
-          "end": 11500,
-          "style": {
-            "type": "esriSFS",
-            "color": [255, 255, 255, 200]
-          },
-          "name": "string1",
-          "visible": true,
-          "label": {
-            "type": "esriTS",
-            "color": [34, 34, 34, 255],
-            "text": "11000-11500",
-            "font": {
-              "size": 14
-            }
-          }
-        }
-      ]
+      }
     }
   ]
   cedar.series.map((set, index) => {
     json.series.push({
-      type: "barSeries",
-      id: set.source,
-      name: set.source,
-      query: cedar.datasets[index].query,
+      // @ts-ignore
+      type: convertChartType(cedar),
+      id: set.source || `chart${index}`,
+      name: set.value.label,
+      // query: cedar.datasets[0].query,
       x: set.category.field,
       y: set.value.field,
       colorType: "singleColor",
-      stackedType: "sideBySide",
+      // stackedType: "sideBySide",
+      markerSymbol: {
+        type: "esriSMS",
+        style: "esriSMSCircle",
+        size: 5
+      },
       fillSymbol: {
         type: "esriSFS",
         color: [0, 121, 193, 200],
@@ -198,12 +233,16 @@ function convertBarSeries(cedar) {
           width: 1,
         },
       },
+      lineSymbol: {
+        "type": "esriSLS",
+        "width": 1
+      },
       dataLabels: {
         type: "chartText",
-        visible: true,
+        visible: false, // consider how to make labels configurable?
         content: {
           type: "esriTS",
-          color: [0, 121, 193, 255],
+          color: cedarColors.blue,
           font: {
             size: 14,
           },
@@ -211,91 +250,7 @@ function convertBarSeries(cedar) {
       },
     });
 
-    // json.axes.push(
-    //   {
-    //     type: "chartAxis",
-    //     visible: true,
-    //     title: {
-    //       type: "chartText",
-    //       visible: true,
-    //       content: {
-    //         type: "esriTS",
-    //         color: [255, 255, 255, 255],
-    //         text: set.category.label,
-    //         font: {
-    //           size: 14,
-    //         },
-    //       },
-    //     },
-    //     labels: {
-    //       type: "chartText",
-    //       visible: true,
-    //       content: {
-    //         type: "esriTS",
-    //         color: [120, 120, 120, 255],
-    //         font: {
-    //           size: 14,
-    //         },
-    //       },
-    //     },
-    //     valueFormat: {
-    //       type: "category",
-    //       characterLimit: 11,
-    //     },
-    //     lineSymbol: {
-    //       type: "esriSLS",
-    //       color: [120, 120, 120, 255],
-    //       width: 2,
-    //     },
-    //   },
-    //   {
-    //     type: "chartAxis",
-    //     visible: true,
-    //     title: {
-    //       type: "chartText",
-    //       visible: true,
-    //       content: {
-    //         type: "esriTS",
-    //         color: [120, 120, 120, 255],
-    //         text: set.value.label,
-    //         font: {
-    //           size: 14,
-    //         },
-    //       },
-    //     },
-    //     labels: {
-    //       type: "chartText",
-    //       visible: true,
-    //       content: {
-    //         type: "esriTS",
-    //         color: [120, 120, 120, 255],
-    //         font: {
-    //           size: 14,
-    //         },
-    //       },
-    //     },
-    //     valueFormat: {
-    //       type: "number",
-    //       intlOptions: {
-    //         style: "decimal",
-    //         notation: "compact",
-    //         minimumFractionDigits: 0,
-    //         maximumFractionDigits: 1,
-    //       },
-    //     },
-    //     grid: {
-    //       type: "esriSLS",
-    //       color: [128, 128, 128, 200],
-    //       width: 1,
-    //     },
-    //     lineSymbol: {
-    //       type: "esriSLS",
-    //       color: [120, 120, 120, 255],
-    //       width: 2,
-    //     },
-    //   }
-    // )
-    });
+  });
 
   json.legend = {
     type: "chartLegend",
@@ -305,8 +260,8 @@ function convertBarSeries(cedar) {
       visible: true,
       content: {
         type: "esriTS",
-        color: [255, 255, 255, 255],
-        text: "Primary type",
+        color: cedarColors.white,
+        text: cedar.series[0].category.label,
         font: {
           size: 14,
           weight: "bold",
@@ -315,7 +270,7 @@ function convertBarSeries(cedar) {
     },
     body: {
       type: "esriTS",
-      color: [255, 255, 255, 255],
+      color: cedarColors.white,
       font: {
         size: 12,
       },

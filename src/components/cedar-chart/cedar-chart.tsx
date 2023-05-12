@@ -26,10 +26,35 @@ import { convertCedar } from '../../util/converter';
   shadow: true,
 })
 export class CedarChart {
-  chartEl: HTMLArcgisChartsBarChartElement; 
-
+  
+  /** 
+   * URL to an ArcGIS Charts config
+   */
   @Prop() configUrl:string = null;
+
+  /**
+   * URL to an ArcGIS Cedar Config
+   */
   @Prop() cedarUrl:string = null;
+
+  /**
+   * Optional Chart title
+   */
+  @Prop() chartTitle:string = "";
+
+  /** 
+   * ArcGIS Charts Config
+   */
+  @Prop({mutable: true, reflect: true}) config: WebChart = null;
+
+  /**
+   * ArcGIS Cedar Config
+   */
+  @Prop({mutable: true, reflect: true}) cedar:any = {};
+
+  @State() chartType: 'bar' | 'line' | 'sparkline' = 'bar';
+
+  @State() data = null;
 
   async componentWillLoad() {
     // this.config = feature_layer_chart;
@@ -39,8 +64,12 @@ export class CedarChart {
       this.config = await response.json();
     } else if (!!this.cedarUrl) {
       const response = await fetch(this.cedarUrl);
-      const cedar = await response.json();
-      this.config = convertCedar( cedar );
+      this.cedar = await response.json();
+      
+      // TODO: move this to check the final ArcGIS chart type.
+      this.chartType = this.cedar?.type;
+
+      this.config = convertCedar( this.cedar, this.chartTitle );
     }
     console.debug("Chart config loaded", {
       configUrl: this.configUrl,
@@ -52,8 +81,6 @@ export class CedarChart {
   componentDidLoad() {
     // setAssetPath(location.href);
   }
-  @State() config = null;
-  @State() data = null;
 
   @Listen('arcgisChartsDataProcessComplete')
   loadingComplete(evt)  {
@@ -74,17 +101,65 @@ export class CedarChart {
     return (
       <Host>
         <slot></slot>
-        <arcgis-charts-bar-chart 
-          ref={(el: HTMLArcgisChartsBarChartElement) => this.chartEl = el} 
-          id="bar_chart" 
-          class="chart" 
-          config={this.config as WebChart}
-        ></arcgis-charts-bar-chart>
-        <code>
-          {this.config}
-        </code>
+        {this.renderChart()}
+        {/* {this.renderSource()} */}
       </Host>
     );
+  }
+
+  private sourceEl;
+  renderSource() {
+    return( [
+      <a onClick={(_ev) => this.sourceEl.classList.toggle('visible')}>source</a>
+      ,
+      <div class="source" ref={(el) => this.sourceEl = el}>
+        <code class="source-cedar">
+          Cedar
+          {JSON.stringify(this.cedar)}
+        </code>
+        <code class="source-chart">
+          ArcGIS Charts
+          {JSON.stringify(this.config)}
+        </code>
+      </div>]
+    )
+  }
+  renderChart() {
+    switch(this.chartType) {
+      case 'bar': {
+        return this.renderBarChart();
+      }
+      case 'line': {
+        return this.renderLineChart();
+      }
+      case 'sparkline': {
+        return this.renderLineChart();
+      }
+      default: {
+        return (<strong>`{this.chartType}` is not a recognized chart type</strong>)
+      }
+    }
+  }
+
+  renderLineChart() {
+    return (
+      <arcgis-charts-line-chart 
+          id="chart" 
+          class="chart" 
+          config={this.config as WebChart}
+      ></arcgis-charts-line-chart>
+    )
+  }
+
+
+  renderBarChart() {
+    return (
+      <arcgis-charts-bar-chart 
+          id="chart" 
+          class="chart" 
+          config={this.config as WebChart}
+      ></arcgis-charts-bar-chart>
+    )
   }
 
 }

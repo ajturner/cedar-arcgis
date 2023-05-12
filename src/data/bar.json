@@ -20,7 +20,7 @@
     "series": [
       {
         "category": {"field": "Type", "label": "Type"},
-        "value": {"field": "Number_of_SUM", "label": "Number of Students"},
+        "value": {"field": "Number_of_SUM", "label": "Number of Students", "type": "number" },
         "source": "Number_of_SUM"
       }
     ]

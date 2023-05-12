@@ -1,11 +1,28 @@
 :host {
   display: block;
-  border: 1px dashed red;
-  width: 800px;
-  height: 800px;
 }
 .chart {
-  width: 800px;
-  height: 800px;
-
+  height: 100%;
+}
+.source {
+  display: none;
+  
+  z-index: 1000;
+  overflow: auto;
+  height: 300px;
+  border: 1px solid gray;
+  
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 0px;
+}
+.source-cedar {
+  grid-column: 1;
+  overflow: auto;
+}
+.source-chart {
+  grid-column: 2;
+  overflow: auto;
+}
+.source.visible {
+  display: grid;
 }

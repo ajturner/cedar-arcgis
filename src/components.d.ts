@@ -5,9 +5,28 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { WebChart } from "@arcgis/charts-spec";
 export namespace Components {
     interface CedarChart {
+        /**
+          * ArcGIS Cedar Config
+         */
+        "cedar": any;
+        /**
+          * URL to an ArcGIS Cedar Config
+         */
         "cedarUrl": string;
+        /**
+          * Optional Chart title
+         */
+        "chartTitle": string;
+        /**
+          * ArcGIS Charts Config
+         */
+        "config": WebChart;
+        /**
+          * URL to an ArcGIS Charts config
+         */
         "configUrl": string;
     }
     interface CedarTable {
@@ -33,7 +52,25 @@ declare global {
 }
 declare namespace LocalJSX {
     interface CedarChart {
+        /**
+          * ArcGIS Cedar Config
+         */
+        "cedar"?: any;
+        /**
+          * URL to an ArcGIS Cedar Config
+         */
         "cedarUrl"?: string;
+        /**
+          * Optional Chart title
+         */
+        "chartTitle"?: string;
+        /**
+          * ArcGIS Charts Config
+         */
+        "config"?: WebChart;
+        /**
+          * URL to an ArcGIS Charts config
+         */
         "configUrl"?: string;
     }
     interface CedarTable {

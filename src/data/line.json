@@ -5,7 +5,7 @@
         "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/DC_Crashes/FeatureServer/0",
         "query": {
           "where": "REPORTDATE > '2007-01-01' AND REPORTDATE < '2018-01-01'",
-          "groupByFieldsForStatistics": "EXTRACT(YEAR from REPORTDATE)",
+          "groupByFieldsForStatistics": ["EXTRACT(YEAR from REPORTDATE)"],
           "outStatistics": [
             {
               "statisticType": "sum",
@@ -17,7 +17,7 @@
               "outStatisticFieldName": "MINORINJURIES_SUM"
             }
           ],
-          "orderByFields": "EXTRACT(YEAR from REPORTDATE) ASC",
+          "orderByFields": ["EXTRACT(YEAR from REPORTDATE) ASC"],
           "sqlFormat": "standard"
         }
       }
