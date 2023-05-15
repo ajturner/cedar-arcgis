@@ -50,17 +50,17 @@
     "series": [
       {
         "category": {"field": "Type", "label": "Type"},
-        "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
+        "value": { "field": "Number_of_SUM", "label": "Jordan Students", "type": "number"},
         "source": "Jordan"
       },
       {
         "category": {"field": "Type", "label": "Type"},
-        "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
+        "value": { "field": "Number_of_SUM", "label": "Dewitt Students", "type": "number"},
         "source": "Dewitt"
       },
       {
         "category": {"field": "Type", "label": "Type"},
-        "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
+        "value": { "field": "Number_of_SUM", "label": "Fayetteville Students", "type": "number"},
         "source": "Fayetteville"
       }
     ]

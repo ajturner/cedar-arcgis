@@ -25,37 +25,35 @@
     <!-- Delayed render so we can get the API key from URL parameters -->
     <div id="placeholder"></div>
 
-    <h3>Engagement Dashboard</h3>
-    <div class="dashboard">
+    <h3>Other Demos</h3>
 
+    <cedar-chart class="chart-wide" cedar-url="/data/tree_cedar.json">
+        Trees Chart
+    </cedar-chart>
+
+    <div class="dashboard">
         <cedar-chart cedar-url="/data/line_inline.json" chart-title="Count of Crime by Month in 2022">
             Cedar Line Demo
         </cedar-chart>
 
-
         <cedar-chart cedar-url="/data/bar.json">
             Cedar Bar Demo
-        </cedar-chart>
-
-        <cedar-chart cedar-url="/data/bar_grouped.json">
-            Cedar Bar Grouped Demo
         </cedar-chart>
 
         <cedar-chart cedar-url="/data/311_cedar.json">
             311 Chart
         </cedar-chart>
 
-        <cedar-chart cedar-url="/data/tree_cedar.json">
-            cedar Chart
-        </cedar-chart>
-
-        <cedar-chart config-url="/data/trees.json">
-            Trees Chart
-        </cedar-chart>
-
         <cedar-chart config-url="/data/crime.json">
             Crime Chart
         </cedar-chart>
+
+        <cedar-chart cedar-url="/data/dc_crashes.json">
+            Crashes Chart
+        </cedar-chart>        
+        <cedar-chart chart-url="/data/grouped_answer.json">
+            Crashes Chart
+        </cedar-chart>        
     </div>
 
     <style>
@@ -77,21 +75,11 @@
             height: 100%;
         }
 
-        #chart-views {
-            grid-area: chart-views;
+        .chart-wide {
+            width: 100vw;
+            height: 50vh;
         }
 
-        #chart-sessions {
-            grid-area: chart-sessions;
-        }
-
-        #chart-duration {
-            grid-area: chart-duration;
-        }
-
-        #chart-views-bar {
-            grid-area: chart-views-bar;
-        }
     </style>
 
     <script>

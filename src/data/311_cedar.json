@@ -20,7 +20,7 @@
     "series": [
       {
         "category": {"field": "SERVICECODEDESCRIPTION", "label": "Service Type"},
-        "value": {"field": "COUNT_NAME", "label": "Count"},
+        "value": {"field": "COUNT_NAME", "label": "Count", "type": "number"},
         "source": "311 requests"
       }
     ]

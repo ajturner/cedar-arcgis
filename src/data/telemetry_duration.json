@@ -228,9 +228,7 @@
   "series": [
     {
       "category": {"field": "timestamp", "label": "Day", "type": "timestamp"},
-      "value": {
-        "field": "avgSessionDuration", "label": "Session Duration", "type": "number" 
-      }
+      "value": { "field": "avgSessionDuration", "label": "Session Duration", "type": "number" }
     }
   ]
   }

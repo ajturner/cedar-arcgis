@@ -228,11 +228,7 @@
     "series": [
       {
         "category": { "field": "timestamp", "label": "Day", "type": "timestamp" },
-        "value": {
-          "field": "views",
-          "label": "Views", 
-          "type": "number" 
-        }
+        "value": { "field": "views", "label": "Views", "type": "number" }
       }
     ]
   }

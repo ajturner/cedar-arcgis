@@ -74,7 +74,8 @@ export class CedarChart {
     console.debug("Chart config loaded", {
       configUrl: this.configUrl,
       cedarUrl: this.cedarUrl,
-      config: this.config
+      config: this.config,
+      json: JSON.stringify(this.config)
     })
     // this.data = inline_chart_data;
   }

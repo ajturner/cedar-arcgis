@@ -20,7 +20,7 @@
     "series": [
       {
         "category": {"field": "CMMN_NM", "label": "Tree Name"},
-        "value": {"field": "COUNT_NAME", "label": "Number of Trees"},
+        "value": {"field": "COUNT_NAME", "label": "Number of Trees", "type": "number"},
         "source": "Trees"
       }
     ]
