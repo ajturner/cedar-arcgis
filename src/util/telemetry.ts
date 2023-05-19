@@ -1,10 +1,8 @@
-import { COMMON_METRICS, ITelemetryRequestOptions, ITelemetryResponse, TIME_DIMENSIONS, getTelemetryReport } from '@esri/telemetry-reporting-client';
-
+import { COMMON_METRICS, IContentIdScope, IHostnameScope, ITelemetryRequestOptions, ITelemetryResponse, TIME_DIMENSIONS, getTelemetryReport } from '@esri/telemetry-reporting-client';
+import state from './state';
 
 const requestParams = {
-    scope: {
-      hostname: 'brollywood.hikes.dev',
-    },
+    scope: null,
     startDate: '2023-05-11T13:42:32.396Z',
     endDate: '2023-05-18T13:42:32.396Z',
     timeDimension: TIME_DIMENSIONS.day,
@@ -17,16 +15,45 @@ const requestParams = {
     httpMethod: 'POST',
     params: {},
     authentication: {
-      token: 'ZrSWSnRi930pcisdSlXrdvsWE69LVtZmy9O_6vQ0M1zIH9OaZVdILwF6uwqVKUsYJis_leP3S2KqDDxL4MKVlVfWJnsCnLUH4vglU1mXwZCZDPfAn-oqzgyyYh8EL8D_CEPcXJ08SQaY3O-lZBmFPH3Uy5icYwbhWi0AtvVJ4rbr8GgN0LlsO4905k_LbQq4x7qbBRAq0_lxSjnSvtkFN1RyMeTFfYrxUgW7z9tBbWw.',
+      token: '',
     },
     hubApiUrl: 'https://hubqa.arcgis.com'
 };
 
+
+export function getCedarUrl(metricType: string ):string {
+  console.debug("getCedarUrl", {metricType});
+  switch(metricType) {
+    case 'page-views:count': {
+      return '/data/telemetry_views_bar.json';
+    }
+    case 'session-activity:average':{
+      return '/data/telemetry_sessions.json';
+    }
+  }
+}
+function getScope(scope: string): IHostnameScope | IContentIdScope {
+  const itemIDPattern = /^[0-9a-fA-F]{32}$/;
+
+  if (itemIDPattern.test(scope)) {
+    return {contentId: scope};;
+  } else {
+    return {hostname: scope};
+  } 
+}
+
 export async function fetchTelemetry(
-        metrics:COMMON_METRICS[] = null,
-        startDate,
-        endDate
-    ) {
+      scope: string,
+      metrics:COMMON_METRICS[] = null,
+      startDate,
+      endDate
+  ) {
+    requestOptions.authentication.token = state.token;
+    requestOptions.hubApiUrl = state.apiUrl;
+    
+    if(!!scope) {
+      requestParams.scope = getScope(scope)
+    }
     if(!!metrics) {
         requestParams.metrics = metrics
     }
@@ -36,16 +63,6 @@ export async function fetchTelemetry(
     }
     const report = await getTelemetryReport(requestParams, requestOptions as ITelemetryRequestOptions);
     return report;
-}
-
-export async function fetchTelemetryFeatureSet(
-    metrics:COMMON_METRICS[] = null,
-    startDate,
-    endDate
-) {
-    // TOD clean up this code
-    const report = await fetchTelemetry(metrics, startDate, endDate);
-    return convertTelemetryReportToFeatureSet(report);
 }
 
 /**

@@ -228,7 +228,7 @@
     "series": [
       {
         "category": { "field": "timestamp", "label": "Day", "type": "timestamp" },
-        "value": { "field": "page-views:count", "label": "page-views:count", "type": "number" }
+        "value": { "field": "page-views:count", "label": "Page Views", "type": "number" }
       }
     ]
   }

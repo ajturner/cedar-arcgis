@@ -8,6 +8,14 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { WebChart } from "@arcgis/charts-spec";
 import { COMMON_METRICS } from "@esri/telemetry-reporting-client";
 export namespace Components {
+    /**
+     * Simple component to get and store identity as state
+     * Avoids drill-through props
+     */
+    interface ArcgisIdentity {
+        "apiUrl": string;
+        "token": string;
+    }
     interface CedarChart {
         /**
           * ArcGIS Cedar Config
@@ -43,17 +51,21 @@ export namespace Components {
          */
         "cedarUrl": string;
         /**
+          * Chart Title
+         */
+        "chartTitle": string;
+        /**
           * End date as ISO-8601 sting. Default to today.
          */
         "endDate": string;
         /**
-          * Which itemId or hostname to get metrics
-         */
-        "itemId": string;
-        /**
           * Which metric to fetch: page-views:count, ...
          */
         "metric": COMMON_METRICS;
+        /**
+          * Which contentId or hostname to get metrics
+         */
+        "scope": string;
         /**
           * Start date as ISO-8601 string. Default to 30 days ago
          */
@@ -61,6 +73,16 @@ export namespace Components {
     }
 }
 declare global {
+    /**
+     * Simple component to get and store identity as state
+     * Avoids drill-through props
+     */
+    interface HTMLArcgisIdentityElement extends Components.ArcgisIdentity, HTMLStencilElement {
+    }
+    var HTMLArcgisIdentityElement: {
+        prototype: HTMLArcgisIdentityElement;
+        new (): HTMLArcgisIdentityElement;
+    };
     interface HTMLCedarChartElement extends Components.CedarChart, HTMLStencilElement {
     }
     var HTMLCedarChartElement: {
@@ -80,12 +102,21 @@ declare global {
         new (): HTMLCedarTelemetryReportElement;
     };
     interface HTMLElementTagNameMap {
+        "arcgis-identity": HTMLArcgisIdentityElement;
         "cedar-chart": HTMLCedarChartElement;
         "cedar-table": HTMLCedarTableElement;
         "cedar-telemetry-report": HTMLCedarTelemetryReportElement;
     }
 }
 declare namespace LocalJSX {
+    /**
+     * Simple component to get and store identity as state
+     * Avoids drill-through props
+     */
+    interface ArcgisIdentity {
+        "apiUrl"?: string;
+        "token"?: string;
+    }
     interface CedarChart {
         /**
           * ArcGIS Cedar Config
@@ -121,23 +152,28 @@ declare namespace LocalJSX {
          */
         "cedarUrl"?: string;
         /**
+          * Chart Title
+         */
+        "chartTitle"?: string;
+        /**
           * End date as ISO-8601 sting. Default to today.
          */
         "endDate"?: string;
         /**
-          * Which itemId or hostname to get metrics
-         */
-        "itemId"?: string;
-        /**
           * Which metric to fetch: page-views:count, ...
          */
         "metric"?: COMMON_METRICS;
+        /**
+          * Which contentId or hostname to get metrics
+         */
+        "scope"?: string;
         /**
           * Start date as ISO-8601 string. Default to 30 days ago
          */
         "startDate"?: string;
     }
     interface IntrinsicElements {
+        "arcgis-identity": ArcgisIdentity;
         "cedar-chart": CedarChart;
         "cedar-table": CedarTable;
         "cedar-telemetry-report": CedarTelemetryReport;
@@ -147,6 +183,11 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * Simple component to get and store identity as state
+             * Avoids drill-through props
+             */
+            "arcgis-identity": LocalJSX.ArcgisIdentity & JSXBase.HTMLAttributes<HTMLArcgisIdentityElement>;
             "cedar-chart": LocalJSX.CedarChart & JSXBase.HTMLAttributes<HTMLCedarChartElement>;
             "cedar-table": LocalJSX.CedarTable & JSXBase.HTMLAttributes<HTMLCedarTableElement>;
             "cedar-telemetry-report": LocalJSX.CedarTelemetryReport & JSXBase.HTMLAttributes<HTMLCedarTelemetryReportElement>;

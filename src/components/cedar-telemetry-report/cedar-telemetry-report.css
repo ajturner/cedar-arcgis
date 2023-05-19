@@ -6,5 +6,5 @@ cedar-chart {
   height: 80%;
 }
 cedar-table {
-  height: 20%;
+  overflow: auto;
 }

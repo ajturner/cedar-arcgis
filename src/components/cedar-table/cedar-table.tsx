@@ -21,8 +21,9 @@ export class CedarTable {
     return (
       <Host>
         <slot></slot>
-        {this.renderTable()}
-        
+        <table>
+          {this.renderTable()}
+        </table>
       </Host>
     );
   }
