@@ -38,6 +38,13 @@ export class CedarChart {
   @Prop() cedarUrl:string = null;
 
   /**
+   * Optional inline data override to cedar
+   * This is a FeatureSet, for cedar
+   * If a general array is used, it will need to drop 'attributes'
+   */
+  @Prop() data:any = null
+
+  /**
    * Optional Chart title
    */
   @Prop() chartTitle:string = "";
@@ -54,8 +61,6 @@ export class CedarChart {
 
   @State() chartType: 'bar' | 'line' | 'sparkline' = 'bar';
 
-  @State() data = null;
-
   async componentWillLoad() {
     // this.config = feature_layer_chart;
 
@@ -69,14 +74,25 @@ export class CedarChart {
       // TODO: move this to check the final ArcGIS chart type.
       this.chartType = this.cedar?.type;
 
+      // If component is sending in specific data
+      // e.g. telemetry data
+      if(!!this.data) {
+        this.cedar.datasets[0].data.features = this.data;
+      }
+      console.debug("Chart cedar converting...", {
+        cedar: this.cedar,
+      });
       this.config = convertCedar( this.cedar, this.chartTitle );
     }
     console.debug("Chart config loaded", {
+      cedar: this.cedar,
       configUrl: this.configUrl,
       cedarUrl: this.cedarUrl,
       config: this.config,
       json: JSON.stringify(this.config)
     })
+
+
     // this.data = inline_chart_data;
   }
   componentDidLoad() {

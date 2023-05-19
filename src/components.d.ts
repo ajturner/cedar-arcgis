@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { WebChart } from "@arcgis/charts-spec";
+import { COMMON_METRICS } from "@esri/telemetry-reporting-client";
 export namespace Components {
     interface CedarChart {
         /**
@@ -28,8 +29,35 @@ export namespace Components {
           * URL to an ArcGIS Charts config
          */
         "configUrl": string;
+        /**
+          * Optional inline data override to cedar This is a FeatureSet, for cedar If a general array is used, it will need to drop 'attributes'
+         */
+        "data": any;
     }
     interface CedarTable {
+        "data": any;
+    }
+    interface CedarTelemetryReport {
+        /**
+          * URL to cedar config for this metric. Optional TODO: provide interal lookup
+         */
+        "cedarUrl": string;
+        /**
+          * End date as ISO-8601 sting. Default to today.
+         */
+        "endDate": string;
+        /**
+          * Which itemId or hostname to get metrics
+         */
+        "itemId": string;
+        /**
+          * Which metric to fetch: page-views:count, ...
+         */
+        "metric": COMMON_METRICS;
+        /**
+          * Start date as ISO-8601 string. Default to 30 days ago
+         */
+        "startDate": string;
     }
 }
 declare global {
@@ -45,9 +73,16 @@ declare global {
         prototype: HTMLCedarTableElement;
         new (): HTMLCedarTableElement;
     };
+    interface HTMLCedarTelemetryReportElement extends Components.CedarTelemetryReport, HTMLStencilElement {
+    }
+    var HTMLCedarTelemetryReportElement: {
+        prototype: HTMLCedarTelemetryReportElement;
+        new (): HTMLCedarTelemetryReportElement;
+    };
     interface HTMLElementTagNameMap {
         "cedar-chart": HTMLCedarChartElement;
         "cedar-table": HTMLCedarTableElement;
+        "cedar-telemetry-report": HTMLCedarTelemetryReportElement;
     }
 }
 declare namespace LocalJSX {
@@ -72,12 +107,40 @@ declare namespace LocalJSX {
           * URL to an ArcGIS Charts config
          */
         "configUrl"?: string;
+        /**
+          * Optional inline data override to cedar This is a FeatureSet, for cedar If a general array is used, it will need to drop 'attributes'
+         */
+        "data"?: any;
     }
     interface CedarTable {
+        "data"?: any;
+    }
+    interface CedarTelemetryReport {
+        /**
+          * URL to cedar config for this metric. Optional TODO: provide interal lookup
+         */
+        "cedarUrl"?: string;
+        /**
+          * End date as ISO-8601 sting. Default to today.
+         */
+        "endDate"?: string;
+        /**
+          * Which itemId or hostname to get metrics
+         */
+        "itemId"?: string;
+        /**
+          * Which metric to fetch: page-views:count, ...
+         */
+        "metric"?: COMMON_METRICS;
+        /**
+          * Start date as ISO-8601 string. Default to 30 days ago
+         */
+        "startDate"?: string;
     }
     interface IntrinsicElements {
         "cedar-chart": CedarChart;
         "cedar-table": CedarTable;
+        "cedar-telemetry-report": CedarTelemetryReport;
     }
 }
 export { LocalJSX as JSX };
@@ -86,6 +149,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "cedar-chart": LocalJSX.CedarChart & JSXBase.HTMLAttributes<HTMLCedarChartElement>;
             "cedar-table": LocalJSX.CedarTable & JSXBase.HTMLAttributes<HTMLCedarTableElement>;
+            "cedar-telemetry-report": LocalJSX.CedarTelemetryReport & JSXBase.HTMLAttributes<HTMLCedarTelemetryReportElement>;
         }
     }
 }
