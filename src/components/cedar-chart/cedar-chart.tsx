@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Listen, Prop } from '@stencil/core';
+import { Component, Host, h, State, Listen, Prop, Watch } from '@stencil/core';
 // import { feature_layer_chart } from '../../data/charts';
 
 // import "arcgis-charts-components";
@@ -38,6 +38,13 @@ export class CedarChart {
   @Prop() cedarUrl:string = null;
 
   /**
+   * Optional inline data override to cedar
+   * This is a FeatureSet, for cedar
+   * If a general array is used, it will need to drop 'attributes'
+   */
+  @Prop() data:any = null
+
+  /**
    * Optional Chart title
    */
   @Prop() chartTitle:string = "";
@@ -54,11 +61,13 @@ export class CedarChart {
 
   @State() chartType: 'bar' | 'line' | 'sparkline' = 'bar';
 
-  @State() data = null;
-
   async componentWillLoad() {
-    // this.config = feature_layer_chart;
+    await this.loadChart();
+  }
 
+  @Watch('cedarUrl')
+  @Watch('data')
+  async loadChart() {
     if(!!this.configUrl) {
       const response = await fetch(this.configUrl);
       this.config = await response.json();
@@ -69,18 +78,23 @@ export class CedarChart {
       // TODO: move this to check the final ArcGIS chart type.
       this.chartType = this.cedar?.type;
 
+      // If component is sending in specific data
+      // e.g. telemetry data
+      if(!!this.data) {
+        this.cedar.datasets[0].data.features = this.data;
+      }
+      console.debug("Chart cedar converting...", {
+        cedar: this.cedar,
+      });
       this.config = convertCedar( this.cedar, this.chartTitle );
     }
     console.debug("Chart config loaded", {
+      cedar: this.cedar,
       configUrl: this.configUrl,
       cedarUrl: this.cedarUrl,
       config: this.config,
       json: JSON.stringify(this.config)
     })
-    // this.data = inline_chart_data;
-  }
-  componentDidLoad() {
-    // setAssetPath(location.href);
   }
 
   @Listen('arcgisChartsDataProcessComplete')
@@ -102,7 +116,7 @@ export class CedarChart {
     return (
       <Host>
         <slot></slot>
-        {this.renderChart()}
+        {this.renderChart(this.config)}
         {/* {this.renderSource()} */}
       </Host>
     );
@@ -125,16 +139,16 @@ export class CedarChart {
       </div>]
     )
   }
-  renderChart() {
+  renderChart(config) {
     switch(this.chartType) {
       case 'bar': {
-        return this.renderBarChart();
+        return this.renderBarChart(config);
       }
       case 'line': {
-        return this.renderLineChart();
+        return this.renderLineChart(config);
       }
       case 'sparkline': {
-        return this.renderLineChart();
+        return this.renderLineChart(config);
       }
       default: {
         return (<strong>`{this.chartType}` is not a recognized chart type</strong>)
@@ -142,23 +156,24 @@ export class CedarChart {
     }
   }
 
-  renderLineChart() {
+  renderLineChart(config) {
     return (
       <arcgis-charts-line-chart 
           id="chart" 
           class="chart" 
-          config={this.config as WebChart}
+          config={config as WebChart}
       ></arcgis-charts-line-chart>
     )
   }
 
 
-  renderBarChart() {
+  renderBarChart(config) {
+    console.debug("rendering Bar Chart", {config})
     return (
       <arcgis-charts-bar-chart 
           id="chart" 
           class="chart" 
-          config={this.config as WebChart}
+          config={config as WebChart}
       ></arcgis-charts-bar-chart>
     )
   }
