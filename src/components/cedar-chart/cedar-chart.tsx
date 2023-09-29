@@ -57,21 +57,36 @@ export class CedarChart {
   /**
    * ArcGIS Cedar Config
    */
-  @Prop({mutable: true, reflect: true}) cedar:any = {};
+  @Prop({mutable: true, reflect: true}) cedar:any = null;
 
   @State() chartType: 'bar' | 'line' | 'sparkline' = 'bar';
-
+  
+  /**
+   * Final stored state to render.
+   * Prevents circular updates with the config Prop
+   */
+  @State() chartConfig: WebChart = null;
+  
   async componentWillLoad() {
     await this.loadChart();
   }
+  
+  componentWillRender() {
+    console.debug("cedar-chart: componentWillRender()");
+  }
 
+  
+  @Watch('cedar')
   @Watch('cedarUrl')
   @Watch('data')
+  @Watch('config')
   async loadChart() {
     if(!!this.configUrl) {
+      console.debug("cedar-chart: loadChart(configUrl)", this.configUrl);
       const response = await fetch(this.configUrl);
-      this.config = await response.json();
+      this.chartConfig = await response.json();
     } else if (!!this.cedarUrl) {
+      console.debug("cedar-chart: loadChart(cedarUrl)", this.cedarUrl);
       const response = await fetch(this.cedarUrl);
       this.cedar = await response.json();
       
@@ -83,12 +98,22 @@ export class CedarChart {
       if(!!this.data) {
         this.cedar.datasets[0].data.features = this.data;
       }
-      console.debug("Chart cedar converting...", {
+      console.debug("cedar-chart: Chart cedar converting...", {
         cedar: this.cedar,
       });
-      this.config = convertCedar( this.cedar, this.chartTitle );
+      this.chartConfig = convertCedar( this.cedar, this.chartTitle );
+    } else if (!!this.cedar) {
+      console.debug("cedar-chart: loadChart(cedar)", this.cedar);
+
+      this.chartConfig = convertCedar( this.cedar, this.chartTitle || "" );
+    } else if (!!this.config) {
+      console.debug("cedar-chart: loadChart(config)", this.cedar);
+      this.chartConfig = this.config;
+    } else {
+      console.debug("cedar-chart: no load option?");
+
     }
-    console.debug("Chart config loaded", {
+    console.debug("cedar-chart: Chart config loaded", {
       cedar: this.cedar,
       configUrl: this.configUrl,
       cedarUrl: this.cedarUrl,
@@ -113,10 +138,15 @@ export class CedarChart {
   }
 
   render() {
+    console.debug("cedar-chart: Rendering chart", {config: this.chartConfig})
+    let content = null;
+    if(!!this.chartConfig) {
+     content = this.renderChart(this.chartConfig)
+    }
     return (
       <Host>
         <slot></slot>
-        {this.renderChart(this.config)}
+        {content}
         {/* {this.renderSource()} */}
       </Host>
     );

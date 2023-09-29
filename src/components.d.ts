@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { WebChart } from "@arcgis/charts-spec";
+import { ICedarFile } from "./util/types";
 import { COMMON_METRICS } from "@esri/telemetry-reporting-client";
 export namespace Components {
     /**
@@ -42,6 +43,9 @@ export namespace Components {
          */
         "data": any;
     }
+    interface CedarConfigurationChooser {
+        "configurations": Array<ICedarFile>;
+    }
     interface CedarTable {
         "data": any;
     }
@@ -72,6 +76,10 @@ export namespace Components {
         "startDate": string;
     }
 }
+export interface CedarConfigurationChooserCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLCedarConfigurationChooserElement;
+}
 declare global {
     /**
      * Simple component to get and store identity as state
@@ -89,6 +97,12 @@ declare global {
         prototype: HTMLCedarChartElement;
         new (): HTMLCedarChartElement;
     };
+    interface HTMLCedarConfigurationChooserElement extends Components.CedarConfigurationChooser, HTMLStencilElement {
+    }
+    var HTMLCedarConfigurationChooserElement: {
+        prototype: HTMLCedarConfigurationChooserElement;
+        new (): HTMLCedarConfigurationChooserElement;
+    };
     interface HTMLCedarTableElement extends Components.CedarTable, HTMLStencilElement {
     }
     var HTMLCedarTableElement: {
@@ -104,6 +118,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "arcgis-identity": HTMLArcgisIdentityElement;
         "cedar-chart": HTMLCedarChartElement;
+        "cedar-configuration-chooser": HTMLCedarConfigurationChooserElement;
         "cedar-table": HTMLCedarTableElement;
         "cedar-telemetry-report": HTMLCedarTelemetryReportElement;
     }
@@ -143,6 +158,10 @@ declare namespace LocalJSX {
          */
         "data"?: any;
     }
+    interface CedarConfigurationChooser {
+        "configurations"?: Array<ICedarFile>;
+        "onConfigurationSelected"?: (event: CedarConfigurationChooserCustomEvent<ICedarFile>) => void;
+    }
     interface CedarTable {
         "data"?: any;
     }
@@ -175,6 +194,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "arcgis-identity": ArcgisIdentity;
         "cedar-chart": CedarChart;
+        "cedar-configuration-chooser": CedarConfigurationChooser;
         "cedar-table": CedarTable;
         "cedar-telemetry-report": CedarTelemetryReport;
     }
@@ -189,6 +209,7 @@ declare module "@stencil/core" {
              */
             "arcgis-identity": LocalJSX.ArcgisIdentity & JSXBase.HTMLAttributes<HTMLArcgisIdentityElement>;
             "cedar-chart": LocalJSX.CedarChart & JSXBase.HTMLAttributes<HTMLCedarChartElement>;
+            "cedar-configuration-chooser": LocalJSX.CedarConfigurationChooser & JSXBase.HTMLAttributes<HTMLCedarConfigurationChooserElement>;
             "cedar-table": LocalJSX.CedarTable & JSXBase.HTMLAttributes<HTMLCedarTableElement>;
             "cedar-telemetry-report": LocalJSX.CedarTelemetryReport & JSXBase.HTMLAttributes<HTMLCedarTelemetryReportElement>;
         }

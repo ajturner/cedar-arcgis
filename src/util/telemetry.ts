@@ -48,6 +48,7 @@ export async function fetchTelemetry(
       startDate,
       endDate
   ) {
+    // TODO: consider if we should do this in a function
     requestOptions.authentication.token = state.token;
     requestOptions.hubApiUrl = state.apiUrl;
     
