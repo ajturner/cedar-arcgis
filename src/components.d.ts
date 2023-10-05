@@ -46,6 +46,14 @@ export namespace Components {
     interface CedarConfigurationChooser {
         "configurations": Array<ICedarFile>;
     }
+    /**
+     * Displays an array of charts 
+     * Initially given a webmap id
+     */
+    interface CedarDashboard {
+        "charts": Array<WebChart>;
+        "webmapId": string;
+    }
     interface CedarTable {
         "data": any;
     }
@@ -103,6 +111,16 @@ declare global {
         prototype: HTMLCedarConfigurationChooserElement;
         new (): HTMLCedarConfigurationChooserElement;
     };
+    /**
+     * Displays an array of charts 
+     * Initially given a webmap id
+     */
+    interface HTMLCedarDashboardElement extends Components.CedarDashboard, HTMLStencilElement {
+    }
+    var HTMLCedarDashboardElement: {
+        prototype: HTMLCedarDashboardElement;
+        new (): HTMLCedarDashboardElement;
+    };
     interface HTMLCedarTableElement extends Components.CedarTable, HTMLStencilElement {
     }
     var HTMLCedarTableElement: {
@@ -119,6 +137,7 @@ declare global {
         "arcgis-identity": HTMLArcgisIdentityElement;
         "cedar-chart": HTMLCedarChartElement;
         "cedar-configuration-chooser": HTMLCedarConfigurationChooserElement;
+        "cedar-dashboard": HTMLCedarDashboardElement;
         "cedar-table": HTMLCedarTableElement;
         "cedar-telemetry-report": HTMLCedarTelemetryReportElement;
     }
@@ -162,6 +181,14 @@ declare namespace LocalJSX {
         "configurations"?: Array<ICedarFile>;
         "onConfigurationSelected"?: (event: CedarConfigurationChooserCustomEvent<ICedarFile>) => void;
     }
+    /**
+     * Displays an array of charts 
+     * Initially given a webmap id
+     */
+    interface CedarDashboard {
+        "charts"?: Array<WebChart>;
+        "webmapId"?: string;
+    }
     interface CedarTable {
         "data"?: any;
     }
@@ -195,6 +222,7 @@ declare namespace LocalJSX {
         "arcgis-identity": ArcgisIdentity;
         "cedar-chart": CedarChart;
         "cedar-configuration-chooser": CedarConfigurationChooser;
+        "cedar-dashboard": CedarDashboard;
         "cedar-table": CedarTable;
         "cedar-telemetry-report": CedarTelemetryReport;
     }
@@ -210,6 +238,11 @@ declare module "@stencil/core" {
             "arcgis-identity": LocalJSX.ArcgisIdentity & JSXBase.HTMLAttributes<HTMLArcgisIdentityElement>;
             "cedar-chart": LocalJSX.CedarChart & JSXBase.HTMLAttributes<HTMLCedarChartElement>;
             "cedar-configuration-chooser": LocalJSX.CedarConfigurationChooser & JSXBase.HTMLAttributes<HTMLCedarConfigurationChooserElement>;
+            /**
+             * Displays an array of charts 
+             * Initially given a webmap id
+             */
+            "cedar-dashboard": LocalJSX.CedarDashboard & JSXBase.HTMLAttributes<HTMLCedarDashboardElement>;
             "cedar-table": LocalJSX.CedarTable & JSXBase.HTMLAttributes<HTMLCedarTableElement>;
             "cedar-telemetry-report": LocalJSX.CedarTelemetryReport & JSXBase.HTMLAttributes<HTMLCedarTelemetryReportElement>;
         }

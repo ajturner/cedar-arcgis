@@ -76,10 +76,10 @@ export class CedarChart {
   }
 
   
-  @Watch('cedar')
-  @Watch('cedarUrl')
-  @Watch('data')
-  @Watch('config')
+  // @Watch('cedar')
+  // @Watch('cedarUrl')
+  // @Watch('data')
+  // @Watch('config')
   async loadChart() {
     if(!!this.configUrl) {
       console.debug("cedar-chart: loadChart(configUrl)", this.configUrl);
@@ -170,7 +170,10 @@ export class CedarChart {
     )
   }
   renderChart(config) {
-    switch(this.chartType) {
+    const type = config.chartType || config.series[0].type.replace(/Series/,'');
+    console.debug("cedar-chart: renderChart", {type, config})
+
+    switch(type) {
       case 'bar': {
         return this.renderBarChart(config);
       }
@@ -180,31 +183,68 @@ export class CedarChart {
       case 'sparkline': {
         return this.renderLineChart(config);
       }
+      case 'pie': {
+        return this.renderPieChart(config);
+      }
+      case 'scatter': {
+        return this.renderScatterChart(config);
+      }      
       default: {
-        return (<strong>`{this.chartType}` is not a recognized chart type</strong>)
+        return (<strong>`{type}` is not a recognized chart type</strong>)
       }
     }
   }
 
+
+  renderPieChart(config) {
+    return ([
+      <h3>Pie Chart</h3>,
+      <arcgis-charts-pie-chart 
+          id="chart" 
+          class="chart" 
+          config={config as WebChart}
+      ></arcgis-charts-pie-chart>
+    ]
+    )
+  }
+
+
+  renderScatterChart(config) {
+    return ([
+      <h3>Scatter Plot</h3>,
+      <arcgis-charts-scatter-plot 
+          id="chart" 
+          class="chart" 
+          config={config as WebChart}
+      ></arcgis-charts-scatter-plot>
+    ]
+    )
+  }  
+
   renderLineChart(config) {
-    return (
+    return ([
+      <h3>Line Chart</h3>,
       <arcgis-charts-line-chart 
           id="chart" 
           class="chart" 
           config={config as WebChart}
       ></arcgis-charts-line-chart>
+    ]
+      
     )
   }
 
 
   renderBarChart(config) {
     console.debug("rendering Bar Chart", {config})
-    return (
+    return ([
+      <h3>Bar Chart</h3>,
       <arcgis-charts-bar-chart 
           id="chart" 
           class="chart" 
           config={config as WebChart}
       ></arcgis-charts-bar-chart>
+    ]
     )
   }
 

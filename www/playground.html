@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>cedar-arcgis</title>
+
+    <script type="module" src="./build/cedar-arcgis.esm.js"></script>
+    <script nomodule src="./build/cedar-arcgis.js"></script>
+
+    <script type="module" src="https://js.arcgis.com/calcite-components/1.8.0/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.8.0/calcite.css" />
+
+
+    <!-- <link
+    rel="stylesheet"
+    type="text/css"
+    href="/lib/arcgis-charts-components.css"
+  />  
+  <script type="module" src="/lib/arcgis-charts-components.esm.js"></script>  -->
+
+</head>
+
+<body>
+    <!-- Delayed render so we can get the API key from URL parameters -->
+    <h3>Charts Playground</h3>
+    <div id="container">
+
+        <div id="input">
+            <cedar-configuration-chooser id="chartChooser"></cedar-configuration-chooser>
+            <calcite-label>
+                Chart input
+                <calcite-text-area id="chartConfig" rows=20 placeholder="{ Chart JSON }">
+                    <calcite-label layout="inline" slot="footer-start">
+                        ArcGIS Charts
+                        <calcite-switch checked id="chartFormat"></calcite-switch>
+                        Cedar
+                    </calcite-label>                    
+                    <calcite-button id="updateChartBtn" slot="footer-end">
+                        Update Chart
+                    </calcite-button>
+                </calcite-text-area>
+            </calcite-label>
+        </div>
+        <div id="output">
+
+            <h3>Chart View</h3>
+            <cedar-chart 
+                id="chartView"  
+                chart-title="Chart Example"
+            >
+             
+            </cedar-chart>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            height: 300px;
+            margin: 10px 40px;
+        }
+        #input, #output, #chartView {
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        // Dynamically add the component so we can set URL or object properties
+        const componentName = "view";
+
+        const updateChartBtnEl = document.getElementById("updateChartBtn");
+        const chartConfigEl = document.getElementById("chartConfig");
+        const chartViewEl = document.getElementById("chartView");
+        const chartFormatEl = document.getElementById("chartFormat");
+        const chartChooserEl = document.getElementById("chartChooser");
+
+        chartChooserEl.addEventListener("configurationSelected", (event) => {
+            console.debug("configurationSelected", event.detail);
+            chartConfigEl.value = JSON.stringify(event.detail);
+            chartViewEl.cedar = event.detail;
+        });
+        updateChartBtnEl.onclick = function () {
+            const config = JSON.parse(chartConfigEl.value);
+            console.log("index.html: Update Chart: ", {cedar: chartFormatEl.checked, config, text: chartConfigEl.value})
+            chartFormatEl.checked ?
+                chartViewEl.cedar = config :
+                chartViewEl.config = config 
+        }
+
+        // chartConfigEl.value = "hi";
+
+        // const placeholderEl = document.getElementById("placeholder");
+        // const componentEl = document.createElement(componentName);
+
+        // const urlParams = new URL(window.location).searchParams;
+        // Change for specific component properties
+        // componentEl.query = urlParams.get('query');
+        // componentEl.innerHTML = "Slot text";
+
+        // placeholderEl.appendChild(componentEl);
+    </script>
+</body>
+
+</html>

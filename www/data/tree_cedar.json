@@ -1,0 +1,28 @@
+{
+    "type": "bar",
+    "datasets": [
+      {
+        "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Environment_WebMercator/MapServer/23",
+        "name": "Trees",
+        "query": {
+            "groupByFieldsForStatistics": ["CMMN_NM"],
+            "outStatistics": [
+                {
+                "onStatisticField": "CMMN_NM",
+                "statisticType": "count",
+                "outStatisticFieldName": "COUNT_NAME"
+                }
+            ],
+            "orderByFields": ["COUNT_NAME DESC"]
+        }
+      }
+    ],
+    "series": [
+      {
+        "category": {"field": "CMMN_NM", "label": "Tree Name"},
+        "value": {"field": "COUNT_NAME", "label": "Number of Trees", "type": "number"},
+        "source": "Trees"
+      }
+    ]
+  }
+  
