@@ -76,10 +76,10 @@ export class CedarChart {
   }
 
   
-  // @Watch('cedar')
-  // @Watch('cedarUrl')
-  // @Watch('data')
-  // @Watch('config')
+  @Watch('cedar')
+  @Watch('cedarUrl')
+  @Watch('data')
+  @Watch('config')
   async loadChart() {
     if(!!this.configUrl) {
       console.debug("cedar-chart: loadChart(configUrl)", this.configUrl);
