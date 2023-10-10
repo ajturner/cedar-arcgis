@@ -1,2 +1,0 @@
-import{r as t,h as s,H as a}from"./p-fc9cd10b.js";import{s as r}from"./p-195fe440.js";const e=class{constructor(s){t(this,s);this.token=null;this.apiUrl="https://hubqa.arcgis.com"}componentWillLoad(){this.updateState()}updateState(){r.token=this.token;r.apiUrl=this.apiUrl}render(){return s(a,null,s("slot",null))}static get watchers(){return{token:["updateState"],apiUrl:["updateState"]}}};export{e as arcgis_identity};
-//# sourceMappingURL=p-4743c9fd.entry.js.map

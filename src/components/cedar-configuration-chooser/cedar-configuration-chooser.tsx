@@ -34,26 +34,26 @@ export class CedarConfigurationChooser {
   componentWillLoad() {
     this.configurations = [
       {
-        url: "/data/311_cedar.json",
+        url: "./data/311_cedar.json",
         name: "311 Dataset",
         type: "dataset",
         id: "311_cedar",
         format: "cedar"
       },
       {
-        url: "/data/bar.json",
+        url: "./data/bar.json",
         name: "Bar",
         type: "dataset",
         id: "Bar",
         format: "cedar"
       },{
-        url: "/data/line.json",
+        url: "./data/line.json",
         name: "Line",
         type: "dataset",
         id: "line",
         format: "cedar"
       },{
-        url: "/data/tree_cedar.json",
+        url: "./data/tree_cedar.json",
         name: "Trees Dataset",
         type: "dataset",
         id: "tree_cedar",

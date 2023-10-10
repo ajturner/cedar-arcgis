@@ -1,2 +1,0 @@
-import{l as e,y as s,n as i,au as a,Q as r,b as t}from"./p-b54724b6.js";const l=l=>{let h=class extends l{initialize(){this.handles.add(a((()=>this.layer),"refresh",(e=>{this.doRefresh(e.dataChanged).catch((e=>{r(e)||t.getLogger(this).error(e)}))})),"RefreshableLayerView")}};return e([s()],h.prototype,"layer",void 0),h=e([i("esri.layers.mixins.RefreshableLayerView")],h),h};export{l as a};
-//# sourceMappingURL=p-3faf3e32.js.map
