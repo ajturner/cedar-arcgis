@@ -1,0 +1,2 @@
+class t{constructor(){this._outer=new Map}clear(){this._outer.clear()}get empty(){return 0===this._outer.size}get(t,s){return this._outer.get(t)?.get(s)}set(t,s,e){const h=this._outer.get(t);h?h.set(s,e):this._outer.set(t,new Map([[s,e]]))}delete(t,s){const e=this._outer.get(t);e&&(e.delete(s),0===e.size&&this._outer.delete(t))}forEach(t){this._outer.forEach(((s,e)=>t(s,e)))}}export{t};
+//# sourceMappingURL=p-db9ccfea.js.map

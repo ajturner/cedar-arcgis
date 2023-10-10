@@ -1,0 +1,2 @@
+function c(c){return c=c||globalThis.location.hostname,l.some((a=>null!=c?.match(a)))}function a(c,a){return c&&(a=a||globalThis.location.hostname)?null!=a.match(s)||null!=a.match(o)?c.replace("static.arcgis.com","staticdev.arcgis.com"):null!=a.match(i)||null!=a.match(t)?c.replace("static.arcgis.com","staticqa.arcgis.com"):c:c}const s=/^devext.arcgis.com$/,i=/^qaext.arcgis.com$/,o=/^[\w-]*\.mapsdevext.arcgis.com$/,t=/^[\w-]*\.mapsqa.arcgis.com$/,l=[/^([\w-]*\.)?[\w-]*\.zrh-dev-local.esri.com$/,s,i,/^jsapps.esri.com$/,o,t];export{a,c};
+//# sourceMappingURL=p-21ae9bf7.js.map

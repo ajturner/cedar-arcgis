@@ -1,0 +1,2 @@
+import{bP as r,bn as t}from"./p-b54724b6.js";function e(e){return{origin:"portal-item",url:r(e.itemUrl),portal:e.portal||t.getDefault(),portalItem:e,readResourcePaths:[]}}function o(e){return{origin:"portal-item",messages:[],writtenProperties:[],url:e.itemUrl?r(e.itemUrl):null,portal:e.portal||t.getDefault(),portalItem:e}}export{e,o};
+//# sourceMappingURL=p-a10686d4.js.map

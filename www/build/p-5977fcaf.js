@@ -1,0 +1,2 @@
+function n(n,t,o,r){const c=n.clone(),e=1<<c.level,u=c.col+t,f=c.row+o;return r&&u<0?(c.col=u+e,c.world-=1):u>=e?(c.col=u-e,c.world+=1):c.col=u,c.row=f,c}export{n as o};
+//# sourceMappingURL=p-5977fcaf.js.map

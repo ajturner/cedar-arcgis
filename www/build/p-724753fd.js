@@ -1,0 +1,2 @@
+import"./p-05938a61.js";function n(n){return n&&"function"==typeof n.render}function t(n){return n&&"function"==typeof n.postMixInProperties&&"function"==typeof n.buildRendering&&"function"==typeof n.postCreate&&"function"==typeof n.startup}export{n as e,t};
+//# sourceMappingURL=p-724753fd.js.map

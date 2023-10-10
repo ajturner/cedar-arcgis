@@ -1,0 +1,2 @@
+import{i as e}from"./p-bf0e41eb.js";function r(r){r&&r.writtenProperties&&r.writtenProperties.forEach((({target:r,propName:i,newOrigin:o})=>{e(r)&&o&&r.originOf(i)!==o&&r.updateOrigin(i,o)}))}export{r as i};
+//# sourceMappingURL=p-bafc5e09.js.map
