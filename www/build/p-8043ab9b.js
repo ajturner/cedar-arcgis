@@ -1,0 +1,2 @@
+const n="randomUUID"in crypto;function r(){if(n)return crypto.randomUUID();const r=crypto.getRandomValues(new Uint16Array(8));r[3]=4095&r[3]|16384,r[4]=16383&r[4]|32768;const t=n=>r[n].toString(16).padStart(4,"0");return t(0)+t(1)+"-"+t(2)+"-"+t(3)+"-"+t(4)+"-"+t(5)+t(6)+t(7)}function t(){return`{${r()}}`}export{r as n,t as r};
+//# sourceMappingURL=p-8043ab9b.js.map

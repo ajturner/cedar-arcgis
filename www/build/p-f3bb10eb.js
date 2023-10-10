@@ -1,0 +1,2 @@
+import{w as e,s as r}from"./p-b54724b6.js";async function t(t,a,o){let n;try{n=await createImageBitmap(t)}catch(e){throw new r("request:server",`Unable to load ${a}`,{url:a,error:e})}return e(o),n}async function a(t,a,o,n,c){let l;try{l=await createImageBitmap(t)}catch(e){throw new r("request:server",`Unable to load tile ${a}/${o}/${n}`,{error:e,level:a,row:o,col:n})}return e(c),l}export{a as o,t};
+//# sourceMappingURL=p-f3bb10eb.js.map

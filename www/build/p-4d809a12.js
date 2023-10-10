@@ -1,0 +1,2 @@
+import{e as t}from"./p-b54724b6.js";async function n(n,e){const{data:r}=await t(n,{responseType:"json",query:{f:"json",...e?.customParameters,token:e?.apiKey}});return r}async function e(t,e){const a=await n(t,e);a.layers=a.layers.filter(r);const s={serviceJSON:a};if((a.currentVersion??0)<10.5)return s;const o=await n(t+"/layers",e);return s.layersJSON={layers:o.layers.filter(r),tables:o.tables},s}function r(t){return!t.type||"Feature Layer"===t.type}export{e as r,n as t};
+//# sourceMappingURL=p-4d809a12.js.map

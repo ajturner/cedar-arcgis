@@ -1,0 +1,2 @@
+class n{}const t=n;function o(n,...t){let o="";for(let r=0;r<t.length;r++)o+=n[r]+t[r];return o+=n[n.length-1],o}!function(n){function t(n){return Math.round(n).toString()}function o(n){return n.toPrecision(8)}n.int=t,n.float=o}(o||(o={}));var r;!function(n){n[n.Color=0]="Color",n[n.Alpha=1]="Alpha",n[n.FrontFace=2]="FrontFace",n[n.NONE=3]="NONE",n[n.COUNT=4]="COUNT"}(r||(r={}));export{r as a,t as n,o};
+//# sourceMappingURL=p-8e3fbd83.js.map

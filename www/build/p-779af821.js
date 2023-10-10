@@ -1,0 +1,2 @@
+import{eo as r,cV as n,e7 as o,ec as e,ba as t,a9 as i,ef as s,e8 as a,fz as c}from"./p-b54724b6.js";import{s as f,c as u}from"./p-80e8e171.js";function p(o){return o?{origin:r(o.origin),vector:r(o.vector)}:{origin:n(),vector:n()}}function m(r,n,t=p()){return o(t.origin,r),e(t.vector,n,r),t}function b(r,n,o){return g(r,n,0,1,o)}function g(r,n,o,f,p){const{vector:m,origin:b}=r,g=e(u.get(),n,b),v=a(m,g)/c(m);return t(p,m,i(v,o,f)),s(p,p,r.origin)}new f((()=>p()));export{m as b,b as j,p as v};
+//# sourceMappingURL=p-779af821.js.map
