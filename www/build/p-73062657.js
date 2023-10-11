@@ -1,2 +1,0 @@
-function e(e,t,l,u){let n=null,o=1e3;"number"==typeof t?(o=t,u=l):(n=t??null,o=l);let r,c=0;const i=()=>{c=0,e.apply(u,r)},m=(...e)=>{n&&n.apply(u,e),r=e,o?c||(c=setTimeout(i,o)):i()};return m.remove=()=>{c&&(clearTimeout(c),c=0)},m.forceUpdate=()=>{c&&(clearTimeout(c),i())},m.hasPendingUpdates=()=>!!c,m}export{e};
-//# sourceMappingURL=p-73062657.js.map
