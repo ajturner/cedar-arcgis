@@ -32,8 +32,9 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@arcgis/charts-components": "^1.0.0-beta.518",
-    "@arcgis/charts-spec": "^1.0.0-beta.518",
+    "@arcgis/charts-spec": "https://hub-library-preview.s3.amazonaws.com/@arcgis/charts-spec/1.0.0-beta.533.tgz",
+    "@arcgis/charts-shared-utils": "https://hub-library-preview.s3.amazonaws.com/@arcgis/charts-shared-utils/1.0.0-beta.533.tgz",
+    "@arcgis/charts-js": "https://hub-library-preview.s3.amazonaws.com/@arcgis/charts-js/1.0.0-beta.533.tgz",    
     "@arcgis/core": "^4.27.6",
     "@esri/arcgis-rest-auth": "^3.6.0",
     "@esri/arcgis-rest-portal": "^4.4.0",
