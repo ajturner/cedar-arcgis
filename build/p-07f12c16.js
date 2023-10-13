@@ -1,0 +1,2 @@
+function n(){const n=new Float32Array(9);return n[0]=1,n[4]=1,n[8]=1,n}function r(n){const r=new Float32Array(9);return r[0]=n[0],r[1]=n[1],r[2]=n[2],r[3]=n[3],r[4]=n[4],r[5]=n[5],r[6]=n[6],r[7]=n[7],r[8]=n[8],r}function t(n,r,t,e,o,a,c,u,l){const f=new Float32Array(9);return f[0]=n,f[1]=r,f[2]=t,f[3]=e,f[4]=o,f[5]=a,f[6]=c,f[7]=u,f[8]=l,f}function e(n,r){return new Float32Array(n,r,9)}Object.freeze(Object.defineProperty({__proto__:null,clone:r,create:n,createView:e,fromValues:t},Symbol.toStringTag,{value:"Module"}));export{n as e,r,t};
+//# sourceMappingURL=p-07f12c16.js.map

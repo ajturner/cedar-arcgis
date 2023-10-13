@@ -1,0 +1,2 @@
+import{f as t}from"./p-14843b2a.js";import{m as a}from"./p-dfd7ee02.js";import{M as o,g as r}from"./p-98455486.js";async function n(t,a,r){const n=await s(t,a,r);return o.fromJSON(n)}async function s(o,n,s){const i=t(o),p={...s},c=r.from(n),{data:f}=await a(i,c,c.sourceSpatialReference,p);return f}export{s as a,n as s};
+//# sourceMappingURL=p-66f65b6a.js.map

@@ -1,0 +1,7 @@
+import{M as t}from"./p-c5929b55.js";
+/*!
+ * All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+ * See https://github.com/Esri/calcite-design-system/blob/main/LICENSE.md for details.
+ * v1.9.0
+ */function n(t){return"opened"in t?t.opened:t.open}function i(t,i=false){(i?t[t.transitionProp]:n(t))?t.onBeforeOpen():t.onBeforeClose();(i?t[t.transitionProp]:n(t))?t.onOpen():t.onClose()}function o(o,s=false){t((()=>{if(o.transitionEl){const{transitionDuration:a,transitionProperty:e}=getComputedStyle(o.transitionEl);const c=a.split(",");const f=e.split(",");const u=f.indexOf(o.openTransitionProp);const l=c[u]??c[0];if(l==="0s"){i(o,s);return}const p=setTimeout((()=>{o.transitionEl.removeEventListener("transitionstart",t);o.transitionEl.removeEventListener("transitionend",r);o.transitionEl.removeEventListener("transitioncancel",r);i(o,s)}),parseFloat(l)*1e3);o.transitionEl.addEventListener("transitionstart",t);o.transitionEl.addEventListener("transitionend",r);o.transitionEl.addEventListener("transitioncancel",r);function t(i){if(i.propertyName===o.openTransitionProp&&i.target===o.transitionEl){clearTimeout(p);o.transitionEl.removeEventListener("transitionstart",t);(s?o[o.transitionProp]:n(o))?o.onBeforeOpen():o.onBeforeClose()}}function r(t){if(t.propertyName===o.openTransitionProp&&t.target===o.transitionEl){(s?o[o.transitionProp]:n(o))?o.onOpen():o.onClose();o.transitionEl.removeEventListener("transitionend",r);o.transitionEl.removeEventListener("transitioncancel",r)}}}}))}export{o};
+//# sourceMappingURL=p-a373825e.js.map

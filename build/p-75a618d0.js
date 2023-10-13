@@ -1,0 +1,2 @@
+import{hF as p,aS as t}from"./p-98455486.js";import{f as o}from"./p-14843b2a.js";import{p as r}from"./p-c6738bb5.js";import"./p-ffb89da5.js";import"./p-dfd7ee02.js";import"./p-da8336be.js";import"./p-1172b129.js";import"./p-e6a64715.js";import"./p-dc29c329.js";async function s(s,e,m){const a=o(s),i=await r(a,p.from(e),{...m});return{count:i.data.count,extent:t.fromJSON(i.data.extent)}}export{s as executeForTopExtents};
+//# sourceMappingURL=p-75a618d0.js.map

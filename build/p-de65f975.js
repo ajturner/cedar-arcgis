@@ -1,0 +1,2 @@
+function e(){return[1,0,0,0,1,0,0,0,1]}function n(e){return[e[0],e[1],e[2],e[3],e[4],e[5],e[6],e[7],e[8]]}function r(e,n,r,t,o,u,c,l,a){return[e,n,r,t,o,u,c,l,a]}function t(e,n){return new Float64Array(e,n,9)}Object.freeze(Object.defineProperty({__proto__:null,clone:n,create:e,createView:t,fromValues:r},Symbol.toStringTag,{value:"Module"}));export{e,t as n,r as t};
+//# sourceMappingURL=p-de65f975.js.map

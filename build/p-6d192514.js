@@ -1,0 +1,2 @@
+import{f as p}from"./p-14843b2a.js";import{d as o}from"./p-c6738bb5.js";import{hF as r}from"./p-98455486.js";import"./p-ffb89da5.js";import"./p-dfd7ee02.js";import"./p-da8336be.js";import"./p-1172b129.js";import"./p-e6a64715.js";import"./p-dc29c329.js";async function t(t,s,m){const i=p(t);return(await o(i,r.from(s),{...m})).data.objectIds}export{t as executeForTopIds};
+//# sourceMappingURL=p-6d192514.js.map

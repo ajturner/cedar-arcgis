@@ -1,0 +1,2 @@
+import{b_ as n,V as t,_ as o,bd as a}from"./p-98455486.js";async function r(n,t){return await n.load(),c(n,t)}async function c(r,c){const f=[],s=(...n)=>{for(const a of n)null!=a&&(Array.isArray(a)?s(...a):t.isCollection(a)?a.forEach((n=>s(n))):o.isLoadable(a)&&f.push(a))};c(s);let u=null;if(await n(f,(async n=>{const t=await a(i(n)?n.loadAll():n.load());!1!==t.ok||u||(u=t)})),u)throw u.error;return r}function i(n){return"loadAll"in n&&"function"==typeof n.loadAll}export{c as a,r as t};
+//# sourceMappingURL=p-e22a21a4.js.map

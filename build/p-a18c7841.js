@@ -1,0 +1,2 @@
+import{bJ as e}from"./p-98455486.js";const t=new e({esriGeometryPoint:"point",esriGeometryMultipoint:"multipoint",esriGeometryPolyline:"polyline",esriGeometryPolygon:"polygon",esriGeometryMultiPatch:"multipatch",mesh:"mesh"});function o(e){return t.toJSON(e)}function n(e){const{bandCount:t,attributeTable:o,colormap:n,pixelType:i}=e.raster.rasterInfo;return 1===t&&(null!=o||null!=n||"u8"===i||"s8"===i)}export{o as e,n as r};
+//# sourceMappingURL=p-a18c7841.js.map

@@ -1,0 +1,2 @@
+import{bP as r,bm as t}from"./p-98455486.js";function e(e){return{origin:"portal-item",url:r(e.itemUrl),portal:e.portal||t.getDefault(),portalItem:e,readResourcePaths:[]}}function o(e){return{origin:"portal-item",messages:[],writtenProperties:[],url:e.itemUrl?r(e.itemUrl):null,portal:e.portal||t.getDefault(),portalItem:e}}export{e,o};
+//# sourceMappingURL=p-fc892660.js.map
